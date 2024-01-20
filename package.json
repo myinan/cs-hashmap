@@ -31,5 +31,8 @@
     "webpack-cli": "",
     "webpack-dev-server": "",
     "webpack-merge": ""
+  },
+  "dependencies": {
+    "@myinan/linked-list": "^1.0.1"
   }
 }

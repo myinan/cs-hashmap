@@ -1,6 +1,6 @@
-//events - a basic (publish subscribe) pattern
+// events - a basic (publish subscribe) pattern
 
-export const events = {
+export default const events = {
   events: {},
   on: function (eventName, fn) {
     this.events[eventName] = this.events[eventName] || [];
