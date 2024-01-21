@@ -1,10 +1,11 @@
 import LinkedList from "@myinan/linked-list/linkedList";
 
 export default class HashMap {
+  #currentSize = 0;
+
   constructor(initialLength = 16) {
     this.table = new Array(initialLength);
     this.tableLength = initialLength;
-    this.currentSize = 0;
   }
 
   static #hash(string) {
@@ -21,7 +22,7 @@ export default class HashMap {
   #resize(newCapacity) {
     const oldData = this.table;
     this.tableLength = newCapacity;
-    this.currentSize = 0;
+    this.#currentSize = 0;
     this.table = new Array(newCapacity);
 
     oldData.forEach((bucket) => {
@@ -45,16 +46,16 @@ export default class HashMap {
     if (this.table[index]) {
       if (!HashMap.#replaceKey(this.table[index], obj)) {
         this.table[index].append(obj);
-        this.currentSize += 1;
+        this.#currentSize += 1;
       }
     } else if (!this.table[index]) {
       this.table[index] = new LinkedList();
       this.table[index].append(obj);
-      this.currentSize += 1;
+      this.#currentSize += 1;
     }
 
     // Resize if table got too crowded
-    const loadFactor = this.currentSize / this.tableLength;
+    const loadFactor = this.#currentSize / this.tableLength;
     if (loadFactor > 0.75) {
       this.#resize(this.tableLength * 2);
     }
@@ -106,6 +107,7 @@ export default class HashMap {
       if (cur.value.key === key) {
         const curIndex = bucket.indexOf(cur.value);
         bucket.removeAt(curIndex);
+        this.#currentSize -= 1;
         return true;
       }
       cur = cur.next;
