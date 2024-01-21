@@ -3,13 +3,13 @@ import LinkedList from "@myinan/linked-list/linkedList";
 export default class HashMap {
   constructor() {
     this.table = [];
-    this.tableLength = 16;
+    this.tableLength = 64;
   }
 
   static #hash(string) {
     let hashCode = 0;
 
-    const primeNumber = 31;
+    const primeNumber = 51;
     for (let i = 0; i < string.length; i += 1) {
       hashCode = primeNumber * hashCode + string.charCodeAt(i);
     }
@@ -58,13 +58,35 @@ export default class HashMap {
     }
     return null;
   }
+
+  has(key) {
+    const index = HashMap.#hash(key) % this.tableLength;
+    let cur = this.table[index]?.head;
+    while (cur) {
+      if (cur.value.key === key) {
+        return true;
+      }
+      cur = cur.next;
+    }
+    return false;
+  }
+
+  remove(key) {
+    const index = HashMap.#hash(key) % this.tableLength;
+    const bucket = this.table[index];
+    let cur = bucket.head;
+
+    while (cur) {
+      if (cur.value.key === key) {
+        const curIndex = bucket.indexOf(cur.value);
+        console.log(curIndex);
+        console.log(bucket.removeAt(curIndex));
+        console.log(bucket);
+        return true;
+      }
+      cur = cur.next;
+    }
+
+    return false;
+  }
 }
-
-const hashTable = new HashMap();
-hashTable.set("testKey", 5);
-hashTable.set("testKey", 6);
-hashTable.set("anotherTestt", "tested");
-hashTable.set("anotherTest", "1233");
-console.log(hashTable);
-
-console.log(hashTable.get("testKey"));
