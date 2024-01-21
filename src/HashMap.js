@@ -1,9 +1,10 @@
 import LinkedList from "@myinan/linked-list/linkedList";
 
 export default class HashMap {
-  constructor() {
-    this.table = [];
-    this.tableLength = 64;
+  constructor(initialLength = 16) {
+    this.table = new Array(initialLength);
+    this.tableLength = initialLength;
+    this.currentSize = 0;
   }
 
   static #hash(string) {
@@ -17,6 +18,23 @@ export default class HashMap {
     return hashCode;
   }
 
+  #resize(newCapacity) {
+    const oldData = this.table;
+    this.tableLength = newCapacity;
+    this.currentSize = 0;
+    this.table = new Array(newCapacity);
+
+    oldData.forEach((bucket) => {
+      if (bucket) {
+        let cur = bucket.head;
+        while (cur) {
+          this.set(cur.value.key, cur.value.value);
+          cur = cur.next;
+        }
+      }
+    });
+  }
+
   set(key, value) {
     const obj = {
       key,
@@ -27,10 +45,18 @@ export default class HashMap {
     if (this.table[index]) {
       if (!HashMap.#replaceKey(this.table[index], obj)) {
         this.table[index].append(obj);
+        this.currentSize += 1;
       }
     } else if (!this.table[index]) {
       this.table[index] = new LinkedList();
       this.table[index].append(obj);
+      this.currentSize += 1;
+    }
+
+    // Resize if table got too crowded
+    const loadFactor = this.currentSize / this.tableLength;
+    if (loadFactor > 0.75) {
+      this.#resize(this.tableLength * 2);
     }
   }
 
@@ -148,18 +174,3 @@ export default class HashMap {
     return entries;
   }
 }
-
-const hashTable = new HashMap();
-
-hashTable.set("first", 0);
-hashTable.set("first", 1);
-hashTable.set("second", 2);
-hashTable.set("third", 3);
-hashTable.set("fourth", 4);
-hashTable.set("fifth", 5);
-
-console.log(hashTable);
-console.log(hashTable.length);
-console.log(hashTable.keys);
-console.log(hashTable.values);
-console.log(hashTable.entries);
