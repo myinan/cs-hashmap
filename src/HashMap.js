@@ -79,9 +79,7 @@ export default class HashMap {
     while (cur) {
       if (cur.value.key === key) {
         const curIndex = bucket.indexOf(cur.value);
-        console.log(curIndex);
-        console.log(bucket.removeAt(curIndex));
-        console.log(bucket);
+        bucket.removeAt(curIndex);
         return true;
       }
       cur = cur.next;
@@ -89,4 +87,79 @@ export default class HashMap {
 
     return false;
   }
+
+  get length() {
+    let length = 0;
+    this.table.forEach((bucket) => {
+      if (bucket) {
+        let cur = bucket.head;
+        while (cur) {
+          length += 1;
+          cur = cur.next;
+        }
+      }
+    });
+    return length;
+  }
+
+  clear() {
+    this.table = [];
+  }
+
+  get keys() {
+    const keys = [];
+    this.table.forEach((bucket) => {
+      if (bucket) {
+        let cur = bucket.head;
+        while (cur) {
+          keys.push(cur.value.key);
+          cur = cur.next;
+        }
+      }
+    });
+    return keys;
+  }
+
+  get values() {
+    const values = [];
+    this.table.forEach((bucket) => {
+      if (bucket) {
+        let cur = bucket.head;
+        while (cur) {
+          values.push(cur.value.value);
+          cur = cur.next;
+        }
+      }
+    });
+    return values;
+  }
+
+  get entries() {
+    const entries = [];
+    this.table.forEach((bucket) => {
+      if (bucket) {
+        let cur = bucket.head;
+        while (cur) {
+          entries.push(cur.value);
+          cur = cur.next;
+        }
+      }
+    });
+    return entries;
+  }
 }
+
+const hashTable = new HashMap();
+
+hashTable.set("first", 0);
+hashTable.set("first", 1);
+hashTable.set("second", 2);
+hashTable.set("third", 3);
+hashTable.set("fourth", 4);
+hashTable.set("fifth", 5);
+
+console.log(hashTable);
+console.log(hashTable.length);
+console.log(hashTable.keys);
+console.log(hashTable.values);
+console.log(hashTable.entries);
