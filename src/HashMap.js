@@ -176,3 +176,24 @@ export default class HashMap {
     return entries;
   }
 }
+
+/* Driver script */
+const newHashMap = new HashMap();
+newHashMap.set("firstKey", 1);
+newHashMap.set("secondKey", 2);
+newHashMap.set("thirdKey", 3);
+newHashMap.set("fourthKey", 4);
+newHashMap.set("fifthKey", 5);
+console.log(newHashMap);
+
+console.log(newHashMap.get("thirdKey"));
+console.log(newHashMap.has("sixthKey"));
+
+newHashMap.remove("fourthKey");
+console.log(newHashMap);
+
+console.log(newHashMap.length);
+
+console.log(newHashMap.keys);
+console.log(newHashMap.values);
+console.log(newHashMap.entries);

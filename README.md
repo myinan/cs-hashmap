@@ -1,4 +1,6 @@
-A hash table module created with Javascript.
+# HashMap
+## `.src/HashMap.js`
+### A hash table module created with Vanilla Javascript.
 
 + `set` takes two arguments, the first is a key and the second is a value that is assigned to this key. If a key already exists, then the old value is overwritten.
 
