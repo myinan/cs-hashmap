@@ -1,5 +1,6 @@
 # HashMap (Deployed to `gh-pages`)
 ## `.src/HashMap.js`
+## Deployment address: [`myinan.github.io/cs-hashmap/`](https://myinan.github.io/cs-hashmap/ "https://myinan.github.io/cs-hashmap/")
 ### A hash table module created with Vanilla Javascript.
 
 + `set` takes two arguments, the first is a key and the second is a value that is assigned to this key. If a key already exists, then the old value is overwritten.
