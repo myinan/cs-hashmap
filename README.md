@@ -1,4 +1,4 @@
-# HashMap
+# HashMap (Deployed to `gh-pages`)
 ## `.src/HashMap.js`
 ### A hash table module created with Vanilla Javascript.
 
